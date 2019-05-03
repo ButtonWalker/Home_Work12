@@ -1,0 +1,31 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.0'
+      jupytext_version: 1.0.4
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{python}
+# Dependencies 
+from bs4 import BeautifulSoup
+from splinter import Browser
+import pandas as pd
+import requests
+```
+
+```{python}
+# executable path to driver 
+executable_path = {'executable_path': 'chromedriver.exe'}
+browser = Browser('chrome', **executable_path, headless=False)
+```
+
+```{python}
+
+```
