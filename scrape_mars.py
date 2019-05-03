@@ -184,7 +184,7 @@ def scrapeMarsHemispheres():
     # Loop through
     for img in items: 
         # title
-        title = img.find('h3').text
+        titles = img.find('h3').text
         
         # full image links
         partialUrl = img.find('a', class_='itemLink product-item')['href']
@@ -202,7 +202,7 @@ def scrapeMarsHemispheres():
         imgUrl = hemispheresMainUrl + soup.find('img', class_='wide-image')['src']
         
         # Append the retreived information into a list of dictionaries 
-        hemisphereImageUrls.append({"title" : title, "img_url" : imgUrl})
+        hemisphereImageUrls.append({"title" : titles, "img_url" : imgUrl})
         
     # Display hemisphere_image_urls
     hemisphereImageUrls
