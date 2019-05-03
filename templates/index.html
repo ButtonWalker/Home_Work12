@@ -26,8 +26,8 @@
         <!-- News Section -->
         <div class="container">
             <h3>Latest Mars News</h3>
-            <h6 style="color: #c1440e">{{ marsInfo.news_title }}</h6>
-            <p>{{ marsInfo.news_paragraph }}</p>
+            <h6 style="color: #c1440e">{{ marsInfo.newsTitle }}</h6>
+            <p>{{ marsInfo.newsParagraph }}</p>
         </div>
 
         <div class="container">
@@ -53,7 +53,52 @@
                     <br>
                     <h3>Mars Facts</h3>
                     <div style="max-width: 450px; max-height: 150px; font-size: 15px; margin-bottom: 65px;">
-                        {{ marsInfo.marsFacts|safe}}
+                        <table border="1" class="dataframe">
+                            <thead>
+                              <tr style="text-align: left;">
+                                <th>Description</th>
+                                <th>Value</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Equatorial Diameter:</td>
+                                <td>6,792 km</td>
+                              </tr>
+                              <tr>
+                                <td>Polar Diameter:</td>
+                                <td>6,752 km</td>
+                              </tr>
+                              <tr>
+                                <td>Mass:</td>
+                                <td>6.42 x 10^23 kg (10.7% Earth)</td>
+                              </tr>
+                              <tr>
+                                <td>Moons:</td>
+                                <td>2 (Phobos &amp; Deimos)</td>
+                              </tr>
+                              <tr>
+                                <td>Orbit Distance:</td>
+                                <td>227,943,824 km (1.52 AU)</td>
+                              </tr>
+                              <tr>
+                                <td>Orbit Period:</td>
+                                <td>687 days (1.9 years)</td>
+                              </tr>
+                              <tr>
+                                <td>Surface Temperature:</td>
+                                <td>-153 to 20 �C</td>
+                              </tr>
+                              <tr>
+                                <td>First Record:</td>
+                                <td>2nd millennium BC</td>
+                              </tr>
+                              <tr>
+                                <td>Recorded By:</td>
+                                <td>Egyptian astronomers</td>
+                              </tr>
+                            </tbody>
+                          </table>
                     </div>
                 </div> <!-- col4 -->
             </div><!-- Row -->
@@ -68,9 +113,9 @@
                     {% for item in marsInfo.hemisphereImageUrls %}
                     <div class="col-md-6">
                         <div class="card text-white bg-dark" style="margin: 30px;">
-                            <img class="card-img-top" src="{{ item.imgUrl }}" />
+                            <img class="card-img-top" src="{{ items.img_Url }}" />
                             <div class="card-body">
-                                <p class="card-text">{{ item.title }}</p>
+                                <p class="card-text">{{ items.title }}</p>
                             </div>
                         </div>
                     </div>

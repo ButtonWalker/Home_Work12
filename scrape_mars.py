@@ -3,13 +3,14 @@ from bs4 import BeautifulSoup
 from splinter import Browser
 import pandas as pd
 import requests
+import time
 
 
 # Start Web Browser
 def startBrowser():
-    # executable path to driver 
-    executable_path = {'executable_path': 'chromedriver.exe'}
-    browser = Browser('chrome', **executable_path, headless=False)
+    # # executable path to driver 
+    exec_path = {'executable_path': 'chromedriver'}
+    return Browser('chrome', headless=True, **exec_path)
 
 
 # global container for Mars MongoDB
@@ -158,63 +159,59 @@ def scrapeMarsFacts():
 
 # Mars hemisphere
 def scrapeMarsHemispheres():
-    try:
-        # Start browser
-        browser = startBrowser()
+    # Start browser
+    browser = startBrowser()
 
-        # hemispheres website through splinter module 
-        hemispheresUrl = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
-        browser.visit(hemispheresUrl)
+    # hemispheres website through splinter module 
+    hemispheresUrl = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    browser.visit(hemispheresUrl)
 
-        # HTML Object
-        htmlHemispheres = browser.html
+    # HTML Object
+    htmlHemispheres = browser.html
 
-        # Parse HTML with Beautiful Soup
-        soup = BeautifulSoup(htmlHemispheres, 'lxml')
+    # Parse HTML with Beautiful Soup
+    soup = BeautifulSoup(htmlHemispheres, 'lxml')
 
-        # Retreive all items that contain mars hemispheres information
-        items = soup.find_all('div', class_='item')
+    # Retreive all items that contain mars hemispheres information
+    items = soup.find_all('div', class_='item')
 
-        # Create empty list 
-        hemisphereImageUrls = []
+    # Create empty list 
+    hemisphereImageUrls = []
 
-        # main_ul 
-        hemispheresMainUrl = 'https://astrogeology.usgs.gov'
+    # main_ul 
+    hemispheresMainUrl = 'https://astrogeology.usgs.gov'
 
-        # Loop through
-        for img in items: 
-            # title
-            title = img.find('h3').text
-            
-            # full image links
-            partialUrl = img.find('a', class_='itemLink product-item')['href']
-            
-            # go to full image website 
-            browser.visit(hemispheresMainUrl + partialUrl)
-            
-            # HTML Object of individual hemisphere
-            partialImgHtml = browser.html
-            
-            # Parse HTML with Beautiful Soup for every individual hemisphere information website 
-            soup = BeautifulSoup(partialImgHtml, 'lxml')
-            
-            # Retrieve full image source 
-            imgUrl = hemispheresMainUrl + soup.find('img', class_='wide-image')['src']
-            
-            # Append the retreived information into a list of dictionaries 
-            hemisphereImageUrls.append({"title" : title, "img_url" : imgUrl})
-            
-        # Display hemisphere_image_urls
-        # hemisphereImageUrls
+    # Loop through
+    for img in items: 
+        # title
+        title = img.find('h3').text
+        
+        # full image links
+        partialUrl = img.find('a', class_='itemLink product-item')['href']
+        
+        # go to full image website 
+        browser.visit(hemispheresMainUrl + partialUrl)
+        
+        # HTML Object of individual hemisphere
+        partialImgHtml = browser.html
+        
+        # Parse HTML with Beautiful Soup for every individual hemisphere information website 
+        soup = BeautifulSoup(partialImgHtml, 'lxml')
+        
+        # Retrieve full image source 
+        imgUrl = hemispheresMainUrl + soup.find('img', class_='wide-image')['src']
+        
+        # Append the retreived information into a list of dictionaries 
+        hemisphereImageUrls.append({"title" : title, "img_url" : imgUrl})
+        
+    # Display hemisphere_image_urls
+    hemisphereImageUrls
 
-        # Push data to the Mars MongoDB
-        marsInfo['marsHemisphere'] = hemisphereImageUrls
+    # Push data to the Mars MongoDB
+    marsInfo['marsHemisphere'] = hemisphereImageUrls
 
-        return marsInfo
-    
-    finally:
+    return marsInfo
 
-        browser.quit()
 
 
 

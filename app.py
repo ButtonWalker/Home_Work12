@@ -18,7 +18,7 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/Mars_app")
 def home(): 
 
     # Find data
-    marsInfo = mongo.db.collection.find_one()
+    marsInfo = mongo.db.marsInfo.find_one()
     # Return template and data
     return render_template("index.html", marsInfo=marsInfo)
 
@@ -27,7 +27,7 @@ def home():
 def scrape(): 
 
     # Run scrapped functions
-    marsInfo = mongo.db.collection
+    marsInfo = mongo.db.marsInfo
     marsData = scrape_mars.scrapeMarsNews()
     marsData = scrape_mars.scrapeMarsImage()
     marsData = scrape_mars.scrapeMarsFacts()
